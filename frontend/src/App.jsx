@@ -1,6 +1,6 @@
 
 import { lazy, Suspense } from 'react';
-import { Navigate, Route, Routes } from 'react-router-dom';
+import { Navigate, Outlet, Route, Routes } from 'react-router-dom';
 
 import { AuthProvider } from './context/AuthContext.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
@@ -12,7 +12,6 @@ import Display from './pages/Display.jsx';
 
 import { Spinner } from './components/ui.jsx';
 
-// Lazy-loaded admin pages
 const Login = lazy(() => import('./pages/admin/Login.jsx'));
 const Dashboard = lazy(() => import('./pages/admin/Dashboard.jsx'));
 const Visitors = lazy(() => import('./pages/admin/Visitors.jsx'));
@@ -21,29 +20,34 @@ const Displays = lazy(() => import('./pages/admin/Displays.jsx'));
 const Settings = lazy(() => import('./pages/admin/Settings.jsx'));
 const QrCode = lazy(() => import('./pages/admin/QrCode.jsx'));
 
-// Loading fallback
 const Fallback = () => (
   <div className="flex min-h-screen items-center justify-center">
     <Spinner className="h-6 w-6 text-brand" />
   </div>
 );
 
-export default function App() {
+function AdminProvider() {
   return (
     <AuthProvider>
-      <Suspense fallback={<Fallback />}>
-        <Routes>
-          {/* Public Routes */}
-          <Route path="/" element={<Landing />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/display" element={<Display />} />
+      <Outlet />
+    </AuthProvider>
+  );
+}
 
-          {/* Admin Login */}
-          <Route path="/admin/login" element={<Login />} />
+export default function App() {
+  return (
+    <Suspense fallback={<Fallback />}>
+      <Routes>
+        {/* Public Routes */}
+        <Route path="/" element={<Landing />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/display" element={<Display />} />
 
-          {/* Protected Admin Routes */}
+        {/* Admin Routes */}
+        <Route path="/admin" element={<AdminProvider />}>
+          <Route path="login" element={<Login />} />
+
           <Route
-            path="/admin"
             element={
               <ProtectedRoute>
                 <AdminLayout />
@@ -57,11 +61,11 @@ export default function App() {
             <Route path="settings" element={<Settings />} />
             <Route path="qr" element={<QrCode />} />
           </Route>
+        </Route>
 
-          {/* 404 Redirect */}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </Suspense>
-    </AuthProvider>
+        {/* 404 */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </Suspense>
   );
 }

@@ -260,7 +260,7 @@ Use `backend/.env.example` as the configuration template. Update values accordin
 GitHub: [jugkalaria116-create](https://github.com/jugkalaria116-create)
 
 Repository: [QR Visitor Management System](https://github.com/jugkalaria116-create/visitercheck_in)
-<img width="1000" height="1000" alt="Link QR" src="https://github.com/user-attachments/assets/bf89968d-3e90-40c1-97fe-4257d506c680" />
+<img width="100" height="100" alt="Link QR" src="https://github.com/user-attachments/assets/bf89968d-3e90-40c1-97fe-4257d506c680" />
 
 
 ---

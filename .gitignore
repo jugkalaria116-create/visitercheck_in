@@ -1,0 +1,15 @@
+.env
+node_modules/
+backend/vendor/
+backend/.env
+frontend/.env
+# frontend build output served by PHP
+backend/public/index.html
+backend/public/assets/
+# uploads and logs
+backend/storage/visitors/*
+backend/storage/gallery/*
+!backend/storage/visitors/.gitkeep
+!backend/storage/gallery/.gitkeep
+*.log
+.DS_Store
